@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#075e54">
+<title>Viplav Dhandhukia — Comedge Labs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; width: 100%; font-family: 'DM Sans', sans-serif; background: #e5ddd5; overflow-x: hidden; }
+  body { display: flex; flex-direction: column; min-height: 100vh; }
+
+  .wa-header { background: #075e54; padding: 14px 16px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 10; }
+  .avatar { width: 42px; height: 42px; border-radius: 50%; background: #25d366; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600; color: #fff; flex-shrink: 0; }
+  .header-info .name { font-size: 15px; font-weight: 500; color: #fff; }
+  .header-info .status { font-size: 12px; color: #a8d8c8; margin-top: 1px; }
+
+  .chat-scroll { flex: 1; overflow-y: auto; padding: 16px 12px 40px; background: #e5ddd5; background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c5b8aa' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
+
+  .bubble-wrap { display: flex; flex-direction: column; gap: 3px; margin-bottom: 8px; }
+  .bubble { max-width: 88%; padding: 10px 13px; font-size: 14.5px; line-height: 1.55; position: relative; word-break: break-word; }
+  .from-us { background: #fff; color: #1a1a1a; border-radius: 3px 14px 14px 14px; align-self: flex-start; }
+  .from-them { background: #d9fdd3; color: #1a1a1a; border-radius: 14px 3px 14px 14px; align-self: flex-end; margin-left: auto; }
+  .sender-name { font-size: 12px; font-weight: 600; color: #25d366; margin-bottom: 3px; }
+  .msg-time { font-size: 11px; color: #999; text-align: right; margin-top: 5px; }
+  .tick { color: #4fc3f7; margin-left: 2px; }
+
+  .date-divider { text-align: center; margin: 10px 0 14px; }
+  .date-divider span { background: #d1c4b8; color: #5a4f47; font-size: 11.5px; padding: 4px 12px; border-radius: 8px; font-weight: 500; }
+
+  .typing-bubble { background: #fff; border-radius: 3px 14px 14px 14px; padding: 12px 16px; display: inline-flex; align-items: center; gap: 5px; margin-bottom: 6px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #bbb; animation: bounce 1.1s infinite; }
+  .dot:nth-child(2) { animation-delay: 0.18s; }
+  .dot:nth-child(3) { animation-delay: 0.36s; }
+  @keyframes bounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+
+  .product-grid { display: flex; flex-direction: column; gap: 9px; margin: 10px 0 4px; max-width: 88%; }
+  .product-btn { display: flex; align-items: center; gap: 11px; background: #fff; border: 1.5px solid #e0e0e0; border-radius: 12px; padding: 11px 14px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; color: #1a1a1a; text-align: left; transition: border-color 0.15s, background 0.15s; -webkit-tap-highlight-color: transparent; }
+  .product-btn:active { border-color: #25d366; background: #f0fdf4; }
+  .product-icon { width: 36px; height: 36px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .product-label { font-size: 14px; font-weight: 500; }
+  .product-sub { font-size: 11.5px; color: #888; margin-top: 2px; }
+
+  .detail-card { background: #fff; border-radius: 14px; padding: 15px; max-width: 88%; margin: 6px 0 4px; border-left: 3px solid #25d366; }
+  .detail-title { font-size: 14px; font-weight: 600; margin-bottom: 7px; display: flex; align-items: center; gap: 7px; }
+  .detail-body { font-size: 13.5px; line-height: 1.6; color: #333; }
+  .detail-body ul { list-style: none; padding: 0; margin-top: 6px; }
+  .detail-body ul li { padding: 3px 0 3px 18px; position: relative; }
+  .detail-body ul li::before { content: "✓"; position: absolute; left: 0; color: #25d366; font-size: 12px; }
+
+  .slot-grid { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 4px; max-width: 88%; }
+  .slot-btn { padding: 9px 14px; border-radius: 20px; border: 1.5px solid #25d366; background: #fff; color: #128c7e; font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.15s, color 0.15s; -webkit-tap-highlight-color: transparent; }
+  .slot-btn.picked { background: #25d366; color: #fff; }
+
+  .back-btn { background: none; border: none; color: #128c7e; font-size: 13px; font-family: 'DM Sans', sans-serif; cursor: pointer; padding: 6px 0 2px; text-decoration: underline; display: block; }
+
+  .hidden { display: none !important; }
+  .fade-in { animation: fadeUp 0.3s ease forwards; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .success-card { text-align: center; padding: 8px 4px 4px; }
+  .success-icon { width: 52px; height: 52px; border-radius: 50%; background: #e8fdf0; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; }
+  .success-icon svg { width: 26px; height: 26px; stroke: #25d366; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .success-title { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 5px; }
+  .success-sub { font-size: 13px; color: #666; line-height: 1.55; }
+</style>
+</head>
+<body>
+
+<div class="wa-header">
+  <div class="avatar">VD</div>
+  <div class="header-info">
+    <div class="name">Viplav Dhandhukia</div>
+    <div class="status">Comedge Labs · Business Systems Consultant</div>
+  </div>
+</div>
+
+<div class="chat-scroll" id="chatScroll">
+
+  <div class="date-divider"><span>Today</span></div>
+
+  <!-- MSG 1 -->
+  <div class="bubble-wrap">
+    <div class="bubble from-us fade-in">
+      <div class="sender-name">Viplav</div>
+      <span id="greeting-text">🙏 Jay Shree Krishna!</span><br><br>
+      I'm <strong>Viplav Dhandhukia</strong> from <strong>Comedge Labs</strong> — so glad to be part of VBN Kashi, and equally glad we're now connected! 😊
+      <div class="msg-time">Now</div>
+    </div>
+  </div>
+
+  <!-- Typing 1 -->
+  <div id="typing1">
+    <div class="typing-bubble"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+  </div>
+
+  <!-- MSG 2 -->
+  <div class="bubble-wrap hidden" id="msg2">
+    <div class="bubble from-us fade-in">
+      <div class="sender-name">Viplav</div>
+      I'm a <strong>Business Systems Consultant.</strong><br><br>
+      In simple words — I build custom software for SME & MSME owners so their business stops running on WhatsApp groups and gut feel. 😄<br><br>
+      Tap below to see what I build 👇
+      <div class="msg-time">Now</div>
+    </div>
+  </div>
+
+  <!-- Product Buttons -->
+  <div id="product-section" class="hidden">
+    <div class="product-grid fade-in">
+      <button class="product-btn" onclick="showProduct('hrbridge')">
+        <div class="product-icon" style="background:#e8f5e9;">👥</div>
+        <div><div class="product-label">HR Bridge</div><div class="product-sub">Staff & HR management for SMEs</div></div>
+      </button>
+      <button class="product-btn" onclick="showProduct('pulse')">
+        <div class="product-icon" style="background:#fff3e0;">📈</div>
+        <div><div class="product-label">Comedge Pulse</div><div class="product-sub">Commodity hedging for copper traders</div></div>
+      </button>
+      <button class="product-btn" onclick="showProduct('suvarnsetu')">
+        <div class="product-icon" style="background:#fdf6e3;">💛</div>
+        <div><div class="product-label">Suvarnsetu</div><div class="product-sub">Gold scheme management for jewellers</div></div>
+      </button>
+      <button class="product-btn" onclick="showProduct('custom')">
+        <div class="product-icon" style="background:#e8eaf6;">⚙️</div>
+        <div><div class="product-label">Custom Business Systems</div><div class="product-sub">Order mgmt, CRM, workforce tracking</div></div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Product Detail -->
+  <div id="product-detail" class="hidden">
+    <div class="detail-card fade-in" id="detail-card-content"></div>
+    <button class="back-btn fade-in" onclick="backToProducts()">← See other products</button>
+  </div>
+
+  <!-- Connect Section -->
+  <div id="connect-section" class="hidden">
+    <div class="bubble-wrap">
+      <div class="bubble from-us fade-in">
+        <div class="sender-name">Viplav</div>
+        I'd love to know more about <strong>you and your business</strong> too! 🤝<br><br>
+        What's a good time for a quick 15-minute call?
+        <div class="msg-time">Now</div>
+      </div>
+    </div>
+    <div class="slot-grid fade-in">
+      <button class="slot-btn" onclick="pickSlot(this, 'Morning (9–11 AM)')">☀️ Morning</button>
+      <button class="slot-btn" onclick="pickSlot(this, 'Afternoon (12–2 PM)')">🕛 Afternoon</button>
+      <button class="slot-btn" onclick="pickSlot(this, 'Evening (5–7 PM)')">🌆 Evening</button>
+      <button class="slot-btn" onclick="pickSlot(this, 'Weekend')">📅 Weekend</button>
+    </div>
+  </div>
+
+  <!-- Confirmation -->
+  <div id="confirm-section" class="hidden">
+    <div class="bubble-wrap">
+      <div class="bubble from-us fade-in">
+        <div class="success-card">
+          <div class="success-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+          <div class="success-title">Perfect! 🙏</div>
+          <div class="success-sub" id="confirm-text"></div>
+        </div>
+        <div class="msg-time">Now</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  var params = new URLSearchParams(window.location.search);
+  var contactName = params.get('name') || '';
+
+  if (contactName) {
+    document.getElementById('greeting-text').innerHTML = '🙏 Jay Shree Krishna, <strong>' + contactName + 'bhai!</strong>';
+  }
+
+  function scrollDown() {
+    setTimeout(function() {
+      var c = document.getElementById('chatScroll');
+      c.scrollTop = c.scrollHeight;
+    }, 80);
+  }
+
+  function show(id) {
+    document.getElementById(id).classList.remove('hidden');
+    scrollDown();
+  }
+
+  // Auto flow
+  setTimeout(function() {
+    document.getElementById('typing1').classList.add('hidden');
+    show('msg2');
+  }, 1400);
+
+  setTimeout(function() {
+    show('product-section');
+  }, 2600);
+
+  var productData = {
+    hrbridge: {
+      icon: '👥', title: 'HR Bridge', color: '#2e7d32',
+      body: 'For SME owners managing 5–50 staff without a proper HR department.',
+      points: ['Staff onboarding & records', 'Attendance & leave tracking', 'Salary & payroll management', 'Performance & task tracking', 'No more HR chaos on WhatsApp']
+    },
+    pulse: {
+      icon: '📈', title: 'Comedge Pulse', color: '#e65100',
+      body: 'For copper manufacturers and traders who want to protect their margins from price volatility.',
+      points: ['Live LME & MCX copper rate tracking', 'Procurement cost benchmarking', 'Hedging strategy insights', 'Price deviation alerts', 'Know your exposure before the market moves']
+    },
+    suvarnsetu: {
+      icon: '💛', title: 'Suvarnsetu', color: '#f57f17',
+      body: 'Purpose-built for jewellers running gold saving schemes and subscriptions.',
+      points: ['Customer scheme enrollment & tracking', 'Monthly instalment management', 'Maturity & redemption alerts', 'Digital passbook for customers', 'Replaces manual registers completely']
+    },
+    custom: {
+      icon: '⚙️', title: 'Custom Business Systems', color: '#283593',
+      body: 'When your business doesn\'t fit any off-the-shelf software — we build it from scratch.',
+      points: ['Order & dispatch management (OMS)', 'CRM for sales & follow-ups', 'Workforce & field staff tracking', 'Production & inventory systems', 'Built exactly for how YOUR business runs']
+    }
+  };
+
+  var connectShown = false;
+
+  function showProduct(key) {
+    var p = productData[key];
+    var points = p.points.map(function(pt) { return '<li>' + pt + '</li>'; }).join('');
+    document.getElementById('detail-card-content').innerHTML =
+      '<div class="detail-title" style="color:' + p.color + '">' + p.icon + ' &nbsp;' + p.title + '</div>'
+      + '<div class="detail-body">' + p.body + '<ul>' + points + '</ul></div>';
+
+    document.getElementById('product-section').classList.add('hidden');
+    show('product-detail');
+
+    if (!connectShown) {
+      connectShown = true;
+      setTimeout(function() { show('connect-section'); }, 1600);
+    }
+  }
+
+  function backToProducts() {
+    document.getElementById('product-detail').classList.add('hidden');
+    show('product-section');
+  }
+
+  function pickSlot(btn, label) {
+    document.querySelectorAll('.slot-btn').forEach(function(b) { b.classList.remove('picked'); });
+    btn.classList.add('picked');
+    document.getElementById('confirm-text').innerHTML =
+      'I\'ll reach out during <strong>' + label + '</strong>.<br><br>'
+      + 'Looking forward to connecting and knowing more about you. Let\'s grow together through VBN Kashi! 🤝<br><br>'
+      + '— <strong>Viplav</strong> &nbsp;|&nbsp; <a href="tel:9581173078" style="color:#128c7e;text-decoration:none;">📞 9581173078</a>';
+    setTimeout(function() { show('confirm-section'); }, 500);
+  }
+</script>
+</body>
+</html>
