@@ -110,6 +110,13 @@
   <!-- Product Buttons -->
   <div id="product-section" class="hidden">
     <div class="product-grid fade-in">
+      <button class="product-btn" onclick="showProduct('custom')" style="border:2px solid #283593;background:linear-gradient(135deg,#e8eaf6,#fff);">
+        <div class="product-icon" style="background:#283593;font-size:20px;">🏗️</div>
+        <div>
+          <div class="product-label" style="color:#283593;font-weight:600;">Custom Business Systems</div>
+          <div class="product-sub" style="color:#5c6bc0;font-weight:500;">Solutions built around your business</div>
+        </div>
+      </button>
       <button class="product-btn" onclick="showProduct('hrbridge')">
         <div class="product-icon" style="background:#e8f5e9;">👥</div>
         <div><div class="product-label">HR Bridge</div><div class="product-sub">Staff & HR management for SMEs</div></div>
@@ -121,10 +128,6 @@
       <button class="product-btn" onclick="showProduct('suvarnsetu')">
         <div class="product-icon" style="background:#fdf6e3;">💛</div>
         <div><div class="product-label">Suvarnsetu</div><div class="product-sub">Gold scheme management for jewellers</div></div>
-      </button>
-      <button class="product-btn" onclick="showProduct('custom')">
-        <div class="product-icon" style="background:#e8eaf6;">⚙️</div>
-        <div><div class="product-label">Custom Business Systems</div><div class="product-sub">Order mgmt, CRM, workforce tracking</div></div>
       </button>
     </div>
   </div>
@@ -172,9 +175,11 @@
 <script>
   var params = new URLSearchParams(window.location.search);
   var contactName = params.get('name') || '';
+  var gender = params.get('g') || 'm';
+  var suffix = gender === 'f' ? 'ben' : 'bhai';
 
   if (contactName) {
-    document.getElementById('greeting-text').innerHTML = '🙏 Jay Shree Krishna, <strong>' + contactName + 'bhai!</strong>';
+    document.getElementById('greeting-text').innerHTML = '🙏 Jay Shree Krishna, <strong>' + contactName + suffix + '!</strong>';
   }
 
   function scrollDown() {
@@ -248,10 +253,15 @@
   function pickSlot(btn, label) {
     document.querySelectorAll('.slot-btn').forEach(function(b) { b.classList.remove('picked'); });
     btn.classList.add('picked');
+
+    var senderName = contactName ? contactName + suffix : 'a VBN Kashi member';
+    var waMsg = 'Jay Shree Krishna Viplav! 🙏\n\nI just went through your intro page. I am available to connect during: *' + label + '*\n\nLooking forward to speaking!\n\n— ' + senderName;
+    var waUrl = 'https://wa.me/919581173078?text=' + encodeURIComponent(waMsg);
+
     document.getElementById('confirm-text').innerHTML =
-      'I\'ll reach out during <strong>' + label + '</strong>.<br><br>'
-      + 'Looking forward to connecting and knowing more about you. Let\'s grow together through VBN Kashi! 🤝<br><br>'
-      + '— <strong>Viplav</strong> &nbsp;|&nbsp; <a href="tel:9581173078" style="color:#128c7e;text-decoration:none;">📞 9581173078</a>';
+      'Great choice! Now just tap below to send me your time on WhatsApp — I will confirm within the hour 🤝<br><br>'
+      + '<a href="' + waUrl + '" target="_blank" style="display:inline-block;margin-top:8px;background:#25d366;color:#fff;padding:11px 22px;border-radius:22px;text-decoration:none;font-weight:500;font-size:14px;">📲 Send on WhatsApp</a>';
+
     setTimeout(function() { show('confirm-section'); }, 500);
   }
 </script>
