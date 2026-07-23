@@ -179,7 +179,7 @@
   var suffix = gender === 'f' ? 'ben' : 'bhai';
 
   if (contactName) {
-    document.getElementById('greeting-text').innerHTML = '🙏 Jay Shree Krishna, <strong>' + contactName + suffix + '!</strong>';
+    document.getElementById('greeting-text').innerHTML = '🙏 Jay Shree Krishna, <strong>' + contactName + ' ' + suffix + '!</strong>';
   }
 
   function scrollDown() {
@@ -254,7 +254,7 @@
     document.querySelectorAll('.slot-btn').forEach(function(b) { b.classList.remove('picked'); });
     btn.classList.add('picked');
 
-    var senderName = contactName ? contactName + suffix : 'a VBN Kashi member';
+    var senderName = contactName ? contactName + ' ' + suffix : 'a VBN Kashi member';
     var waMsg = 'Jay Shree Krishna Viplav! 🙏\n\nI just went through your intro page. I am available to connect during: *' + label + '*\n\nLooking forward to speaking!\n\n— ' + senderName;
     var waUrl = 'https://wa.me/919581173078?text=' + encodeURIComponent(waMsg);
 
