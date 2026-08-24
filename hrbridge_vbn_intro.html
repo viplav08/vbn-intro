@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0B2033">
+<title>HR Bridge — Special Offer for VBN Kashi</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--teal:#0B9EAD;--teal2:#13C4D6;--navy:#060B14;--gold:#F5A623;--green:#25d366;--wh:#F0F4F8;--mu:rgba(240,244,248,0.55)}
+html,body{width:100%;min-height:100%;font-family:'DM Sans',sans-serif;background:#e5ddd5;overflow-x:hidden;background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c5b8aa' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+body{display:flex;flex-direction:column;min-height:100vh}
+
+/* HEADER */
+.wa-header{background:#0B2033;padding:14px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
+.avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--teal2));display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;letter-spacing:.05em}
+.header-info .name{font-size:15px;font-weight:600;color:#fff}
+.header-info .status{font-size:12px;color:rgba(19,196,214,.8);margin-top:1px}
+
+/* CHAT */
+.chat-scroll{flex:1;padding:16px 12px 80px;display:flex;flex-direction:column;gap:6px}
+.bubble-wrap{display:flex;flex-direction:column;gap:4px;margin-bottom:6px}
+.bubble{max-width:88%;padding:10px 13px;font-size:14.5px;line-height:1.55;word-break:break-word;position:relative}
+.from-us{background:#fff;color:#1a1a1a;border-radius:3px 14px 14px 14px;align-self:flex-start}
+.sender-name{font-size:11px;font-weight:700;color:var(--teal);margin-bottom:4px;letter-spacing:.02em}
+.msg-time{font-size:10px;color:#999;text-align:right;margin-top:5px}
+
+/* TYPING */
+.typing-bubble{background:#fff;border-radius:3px 14px 14px 14px;padding:12px 16px;display:inline-flex;align-items:center;gap:5px}
+.dot{width:8px;height:8px;border-radius:50%;background:#bbb;animation:bounce 1.1s infinite}
+.dot:nth-child(2){animation-delay:.18s}
+.dot:nth-child(3){animation-delay:.36s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+
+/* PAIN CARDS */
+.pain-card{background:#fff;border-radius:3px 14px 14px 14px;padding:12px 14px;max-width:88%;font-size:14px;line-height:1.5;color:#1a1a1a;display:flex;align-items:flex-start;gap:10px}
+.pain-icon{font-size:20px;flex-shrink:0;margin-top:1px}
+.pain-text strong{color:#0B2033;font-weight:600}
+
+/* OFFER BADGE */
+.offer-card{background:linear-gradient(135deg,#0B2033,#0d2a3d);border:2px solid var(--gold);border-radius:16px;padding:20px 18px;max-width:88%;position:relative;overflow:hidden}
+.offer-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(245,166,35,.15) 0%,transparent 70%)}
+.offer-badge{background:var(--gold);color:#000;font-weight:700;font-size:10px;letter-spacing:.15em;padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:12px}
+.offer-pct{font-size:clamp(52px,14vw,80px);font-weight:900;color:var(--gold);line-height:.9;text-shadow:0 0 30px rgba(245,166,35,.4)}
+.offer-off{font-size:clamp(22px,6vw,32px);font-weight:700;color:#fff;margin-top:4px}
+.offer-sub{font-size:13px;color:rgba(245,166,35,.8);margin-top:6px;font-weight:400;line-height:1.5}
+.offer-note{font-size:11px;color:rgba(255,255,255,.45);margin-top:8px}
+.offer-sparkle{position:absolute;top:10px;right:14px;font-size:24px;animation:sparkle 2s ease-in-out infinite}
+@keyframes sparkle{0%,100%{transform:scale(1) rotate(0deg);opacity:1}50%{transform:scale(1.3) rotate(20deg);opacity:.7}}
+
+/* CHOICE BUTTONS */
+.choice-wrap{display:flex;flex-direction:column;gap:10px;margin:8px 0 14px;max-width:88%}
+.choice-btn{padding:13px 16px;border-radius:14px;border:none;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;display:flex;align-items:center;gap:10px;-webkit-tap-highlight-color:transparent;text-align:left}
+.choice-btn.primary{background:linear-gradient(135deg,var(--teal),var(--teal2));color:#fff}
+.choice-btn.secondary{background:#fff;border:1.5px solid var(--teal);color:var(--teal)}
+.choice-btn:active{transform:scale(.97)}
+.choice-btn .btn-icon{font-size:20px;flex-shrink:0}
+.choice-btn .btn-text{flex:1}
+.choice-btn .btn-sub{font-size:11px;opacity:.75;font-weight:400;display:block;margin-top:2px}
+
+/* CONFIRM BUBBLE */
+.success-inner{text-align:center;padding:6px 0 2px}
+.success-icon{width:52px;height:52px;border-radius:50%;background:rgba(11,158,173,.1);display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+.success-icon svg{width:26px;height:26px;stroke:var(--teal2);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.success-title{font-size:16px;font-weight:700;color:#1a1a1a;margin-bottom:6px}
+.success-sub{font-size:13px;color:#555;line-height:1.6}
+.success-link{display:inline-block;background:linear-gradient(135deg,var(--teal),var(--teal2));color:#fff;padding:11px 24px;border-radius:24px;text-decoration:none;font-weight:600;font-size:14px;margin-top:12px}
+
+/* FIREWORKS */
+#fireworks{position:fixed;inset:0;pointer-events:none;z-index:999;overflow:hidden}
+.spark{position:absolute;width:6px;height:6px;border-radius:50%;animation:sparkFly var(--dur) ease-out forwards}
+@keyframes sparkFly{
+  0%{transform:translate(0,0) scale(1);opacity:1}
+  100%{transform:translate(var(--tx),var(--ty)) scale(0);opacity:0}
+}
+.burst{position:absolute;width:4px;height:16px;border-radius:2px;transform-origin:50% 100%;animation:burstFly var(--dur) ease-out forwards}
+@keyframes burstFly{
+  0%{transform:rotate(var(--rot)) scaleY(1);opacity:1}
+  100%{transform:rotate(var(--rot)) translateY(var(--ty)) scaleY(0);opacity:0}
+}
+
+.hidden{display:none!important}
+.fade-in{animation:fadeUp .35s ease forwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<!-- FIREWORKS CANVAS -->
+<div id="fireworks"></div>
+
+<!-- HEADER -->
+<div class="wa-header">
+  <div class="avatar">HRB</div>
+  <div class="header-info">
+    <div class="name">HR Bridge</div>
+    <div class="status">Comedge Labs · Special Offer for VBN Kashi</div>
+  </div>
+</div>
+
+<!-- CHAT -->
+<div class="chat-scroll" id="chatScroll">
+
+  <!-- MSG 1: GREETING -->
+  <div class="bubble-wrap">
+    <div class="bubble from-us fade-in">
+      <div class="sender-name">Viplav · HR Bridge</div>
+      🙏 <strong>Jay Shree Krishna, VBN Kashi Family!</strong><br><br>
+      As a fellow member — I wanted to share something built specifically for business owners like us.
+      <div class="msg-time">Now</div>
+    </div>
+  </div>
+
+  <!-- TYPING 1 -->
+  <div id="t1"><div class="typing-bubble"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>
+
+  <!-- MSG 2: WHAT IT IS -->
+  <div class="bubble-wrap hidden" id="m2">
+    <div class="bubble from-us fade-in">
+      <div class="sender-name">Viplav · HR Bridge</div>
+      <strong>HR Bridge</strong> is a complete HR system for Indian SMEs — built for businesses with 10 to 200 employees who don't have a full HR department.<br><br>
+      Let me show you what it solves 👇
+      <div class="msg-time">Now</div>
+    </div>
+  </div>
+
+  <!-- TYPING 2 -->
+  <div class="hidden" id="t2"><div class="typing-bubble"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>
+
+  <!-- PAIN 1 -->
+  <div class="pain-card hidden fade-in" id="p1">
+    <div class="pain-icon">📅</div>
+    <div class="pain-text"><strong>Month end salary?</strong> 3 days of WhatsApp, Excel, and calling your accountant. Every single month.</div>
+  </div>
+
+  <!-- PAIN 2 -->
+  <div class="pain-card hidden fade-in" id="p2" style="margin-top:6px">
+    <div class="pain-icon">🏖️</div>
+    <div class="pain-text"><strong>Employee on leave — nobody informed.</strong> Salary processed full. Discovered at month end.</div>
+  </div>
+
+  <!-- PAIN 3 -->
+  <div class="pain-card hidden fade-in" id="p3" style="margin-top:6px">
+    <div class="pain-icon">❓</div>
+    <div class="pain-text"><strong>"Sir, kitni leaves bachi hain?"</strong> Nobody has a quick answer. Your team scrambles for the register.</div>
+  </div>
+
+  <!-- TYPING 3 -->
+  <div class="hidden" id="t3"><div class="typing-bubble"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>
+
+  <!-- MSG 3: SOLUTION -->
+  <div class="bubble-wrap hidden" id="m3">
+    <div class="bubble from-us fade-in">
+      <div class="sender-name">Viplav · HR Bridge</div>
+      HR Bridge handles all of this — automatically.<br><br>
+      ✅ Attendance from phone — no app needed<br>
+      ✅ Leave applied & approved on system<br>
+      ✅ Salary auto-calculated with PF, ESIC, PT, TDS<br>
+      ✅ CA gets their own login — pulls reports directly<br>
+      ✅ Employees check their own payslips & leaves<br><br>
+      <strong>Starting at just ₹499/month for up to 10 employees.</strong>
+      <div class="msg-time">Now</div>
+    </div>
+  </div>
+
+  <!-- TYPING 4 -->
+  <div class="hidden" id="t4"><div class="typing-bubble"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>
+
+  <!-- OFFER BADGE -->
+  <div class="offer-card hidden fade-in" id="offerCard">
+    <div style="position:relative;z-index:1">
+      <div class="offer-badge">🎁 EXCLUSIVE · VBN KASHI MEMBERS ONLY</div>
+      <div style="display:flex;align-items:flex-end;gap:8px">
+        <div class="offer-pct">25%</div>
+        <div class="offer-off">OFF<br>FOR 1 YEAR</div>
+      </div>
+      <div class="offer-sub">On any HR Bridge plan — Starter, Growth, or Professional.<br>Valid for VBN Kashi members signing up this month.</div>
+      <div class="offer-note">No coupon needed · Mention VBN Kashi at signup</div>
+    </div>
+    <div class="offer-sparkle">✨</div>
+    <div class="msg-time" style="color:rgba(245,166,35,.5)">Now</div>
+  </div>
+
+  <!-- CHOICES -->
+  <div class="hidden" id="choiceSection">
+    <div class="bubble-wrap">
+      <div class="bubble from-us fade-in">
+        <div class="sender-name">Viplav · HR Bridge</div>
+        How would you like to proceed? 👇
+        <div class="msg-time">Now</div>
+      </div>
+    </div>
+    <div class="choice-wrap">
+      <button class="choice-btn primary" onclick="chooseTrial()">
+        <span class="btn-icon">🚀</span>
+        <span class="btn-text">
+          Start Free Trial
+          <span class="btn-sub">30 days free · No credit card · Claim 25% off</span>
+        </span>
+      </button>
+      <button class="choice-btn secondary" onclick="chooseMore()">
+        <span class="btn-icon">💬</span>
+        <span class="btn-text">
+          Know More First
+          <span class="btn-sub">Viplav will personally reach out</span>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <!-- CONFIRM TRIAL -->
+  <div class="bubble-wrap hidden" id="confirmTrial">
+    <div class="bubble from-us fade-in">
+      <div class="success-inner">
+        <div class="success-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+        <div class="success-title">Excellent! 🎉</div>
+        <div class="success-sub">Your 30-day free trial is waiting.<br>Tap below to get started — and your <strong>25% VBN Kashi discount</strong> applies for a full year.</div>
+        <a href="https://hrbridge.comedgelabs.com/get-started" target="_blank" class="success-link">🚀 Start My Free Trial</a>
+      </div>
+      <div class="msg-time">Now</div>
+    </div>
+  </div>
+
+  <!-- CONFIRM MORE -->
+  <div class="bubble-wrap hidden" id="confirmMore">
+    <div class="bubble from-us fade-in">
+      <div class="success-inner">
+        <div class="success-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+        <div class="success-title">Perfect! 🙏</div>
+        <div class="success-sub">Tap below — I'll personally connect with you on WhatsApp and answer every question.<br><br>Your <strong>25% VBN Kashi discount</strong> will be kept reserved.</div>
+        <a id="waLink" href="#" target="_blank" class="success-link" style="background:#25d366">📲 Message Viplav on WhatsApp</a>
+      </div>
+      <div class="msg-time">Now</div>
+    </div>
+  </div>
+
+</div><!-- end chat -->
+
+<script>
+function scroll(){
+  setTimeout(function(){
+    var c=document.getElementById('chatScroll');
+    c.scrollTop=c.scrollHeight;
+  },80);
+}
+function show(id){
+  var el=document.getElementById(id);
+  el.classList.remove('hidden');
+  scroll();
+}
+function hide(id){document.getElementById(id).classList.add('hidden')}
+
+// FLOW
+setTimeout(function(){hide('t1');show('m2');scroll()},1400);
+setTimeout(function(){show('t2');scroll()},2000);
+setTimeout(function(){hide('t2');show('p1');scroll()},3400);
+setTimeout(function(){show('p2');scroll()},4200);
+setTimeout(function(){show('p3');scroll()},5000);
+setTimeout(function(){show('t3');scroll()},5800);
+setTimeout(function(){hide('t3');show('m3');scroll()},7200);
+setTimeout(function(){show('t4');scroll()},7900);
+setTimeout(function(){
+  hide('t4');
+  show('offerCard');
+  launchFireworks();
+  scroll();
+},9200);
+setTimeout(function(){show('choiceSection');scroll()},10200);
+
+// CHOICES
+function chooseTrial(){
+  hide('choiceSection');
+  show('confirmTrial');
+  scroll();
+}
+function chooseMore(){
+  var msg='Jay Shree Krishna Viplav! 🙏\n\nI am a VBN Kashi member. I came across HR Bridge and would like to know more before starting the trial.\n\nPlease reach out when convenient.';
+  document.getElementById('waLink').href='https://wa.me/919581173078?text='+encodeURIComponent(msg);
+  hide('choiceSection');
+  show('confirmMore');
+  scroll();
+}
+
+// FIREWORKS
+function launchFireworks(){
+  var fw=document.getElementById('fireworks');
+  var colors=['#F5A623','#13C4D6','#0B9EAD','#FFD700','#FF6B6B','#2ECC71','#9B59B6','#E8C547'];
+  var cx=window.innerWidth/2;
+  var cy=window.innerHeight*0.38;
+
+  // 3 bursts with slight offset
+  var bursts=[
+    {x:cx-80,y:cy+40,delay:0},
+    {x:cx+60,y:cy-20,delay:300},
+    {x:cx,y:cy-60,delay:600}
+  ];
+
+  bursts.forEach(function(b){
+    setTimeout(function(){
+      for(var i=0;i<18;i++){
+        var el=document.createElement('div');
+        el.className='spark';
+        var angle=Math.random()*Math.PI*2;
+        var dist=60+Math.random()*100;
+        var tx=Math.cos(angle)*dist;
+        var ty=Math.sin(angle)*dist-80;
+        var color=colors[Math.floor(Math.random()*colors.length)];
+        var dur=(0.6+Math.random()*0.6)+'s';
+        el.style.cssText='left:'+b.x+'px;top:'+b.y+'px;background:'+color+';--tx:'+tx+'px;--ty:'+ty+'px;--dur:'+dur+';border-radius:'+(Math.random()>0.5?'50%':'2px');
+        fw.appendChild(el);
+        setTimeout(function(e){if(e.parentNode)e.parentNode.removeChild(e)},1500,el);
+      }
+      // Tail sparks going up
+      for(var j=0;j<8;j++){
+        var trail=document.createElement('div');
+        trail.className='spark';
+        var tx2=(Math.random()-0.5)*40;
+        var ty2=-(80+Math.random()*120);
+        var color2=colors[Math.floor(Math.random()*colors.length)];
+        trail.style.cssText='left:'+b.x+'px;top:'+b.y+'px;background:'+color2+';--tx:'+tx2+'px;--ty:'+ty2+'px;--dur:0.8s;width:4px;height:4px';
+        fw.appendChild(trail);
+        setTimeout(function(e){if(e.parentNode)e.parentNode.removeChild(e)},1000,trail);
+      }
+    },b.delay);
+  });
+
+  // Repeat once more after 1.2s — double pop effect
+  setTimeout(function(){
+    for(var i=0;i<12;i++){
+      var el=document.createElement('div');
+      el.className='spark';
+      var angle=Math.random()*Math.PI*2;
+      var dist=40+Math.random()*80;
+      var tx=Math.cos(angle)*dist;
+      var ty=Math.sin(angle)*dist-40;
+      var color=colors[Math.floor(Math.random()*colors.length)];
+      el.style.cssText='left:'+(cx+(Math.random()-0.5)*100)+'px;top:'+(cy+(Math.random()-0.5)*60)+'px;background:'+color+';--tx:'+tx+'px;--ty:'+ty+'px;--dur:0.7s';
+      fw.appendChild(el);
+      setTimeout(function(e){if(e.parentNode)e.parentNode.removeChild(e)},900,el);
+    }
+  },900);
+}
+</script>
+</body>
+</html>
